@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="vr-starting">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estética Marista — Face e Corpo | Beleza, Cuidado e Autoestima</title>
+  <meta
+    name="description"
+    content="Na Estética Marista, unimos ciência, tecnologia e sensibilidade para proporcionar experiências de beleza, autoestima e bem-estar."
+  />
+
+  <!-- Google Fonts: High-Contrast Editorial Display Serif + Clean UI Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Swiper CSS for Venetian-style Services Carousel -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- =========================================================
+       1. TELA DE CARREGAMENTO (PRELOADER LUXO)
+  ========================================================== -->
+  <div id="preloader" class="preloader" aria-hidden="true">
+    <div class="preloader__curtain preloader__curtain--top"></div>
+    <div class="preloader__curtain preloader__curtain--bottom"></div>
+
+    <div class="preloader__content">
+      <div class="preloader__orbit">
+        <span class="preloader__ring preloader__ring--outer"></span>
+        <span class="preloader__ring preloader__ring--inner"></span>
+        <img
+          src="assets/logo.png"
+          alt="Logo Estética Marista"
+          class="preloader__logo"
+        />
+      </div>
+
+      <div class="preloader__meta">
+        <span class="preloader__brand">ESTÉTICA MARISTA</span>
+        <span class="preloader__sub">FACE E CORPO</span>
+      </div>
+
+      <div class="preloader__progress-wrap">
+        <div class="preloader__progress-track">
+          <div id="preloader-bar" class="preloader__progress-bar"></div>
+        </div>
+        <span id="preloader-percent" class="preloader__percent">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       2. BARRA DE SCROLL + INDICADOR LATERAL DE PROGRESSO
+  ========================================================== -->
+  <div class="scroll-progress-top" aria-hidden="true">
+    <div id="scroll-progress-fill" class="scroll-progress-top__fill"></div>
+  </div>
+
+  <aside class="scroll-rail" aria-label="Progresso da página">
+    <div class="scroll-rail__track">
+      <div id="scroll-rail-fill" class="scroll-rail__fill"></div>
+    </div>
+    <span id="scroll-rail-percent" class="scroll-rail__percent">00%</span>
+    <nav class="scroll-rail__dots" aria-label="Navegação rápida por seções">
+      <a href="#hero" class="scroll-rail__dot is-active" data-label="Início"></a>
+      <a href="#essencia" class="scroll-rail__dot" data-label="Essência"></a>
+      <a href="#tratamentos" class="scroll-rail__dot" data-label="Tratamentos"></a>
+      <a href="#experiencia" class="scroll-rail__dot" data-label="Experiência"></a>
+      <a href="#missao" class="scroll-rail__dot" data-label="Missão"></a>
+      <a href="#passos" class="scroll-rail__dot" data-label="3 Passos"></a>
+      <a href="#depoimentos" class="scroll-rail__dot" data-label="Relatos"></a>
+      <a href="#faq" class="scroll-rail__dot" data-label="Dúvidas"></a>
+      <a href="#agendar" class="scroll-rail__dot" data-label="Agendar"></a>
+    </nav>
+  </aside>
+
+  <!-- Custom Magnetic Cursor (Desktop) -->
+  <div id="custom-cursor" class="custom-cursor" aria-hidden="true">
+    <span class="custom-cursor__label"></span>
+  </div>
+
+  <!-- =========================================================
+       3. CANVAS 3D ESTÉTICO REATIVO AO SCROLL (THREE.JS)
+  ========================================================== -->
+  <div class="three-stage" aria-hidden="true">
+    <canvas id="aesthetic-3d-canvas"></canvas>
+  </div>
+
+  <!-- =========================================================
+       4. HEADER STICKY COM MORPHING AO ROLAR
+  ========================================================== -->
+  <header id="site-header" class="site-header">
+    <div class="site-header__inner">
+      <a href="#hero" class="brand-lockup" aria-label="Estética Marista - Início">
+        <img
+          src="assets/logo.png"
+          alt="Estética Marista — Face e Corpo"
+          class="brand-lockup__logo"
+        />
+        <div class="brand-lockup__text">
+          <span class="brand-lockup__name">Estética Marista</span>
+          <span class="brand-lockup__tag">FACE E CORPO</span>
+        </div>
+      </a>
+
+      <nav class="site-nav" aria-label="Menu principal">
+        <a href="#essencia" class="site-nav__link">Sobre</a>
+        <a href="#tratamentos" class="site-nav__link">Tratamentos</a>
+        <a href="#experiencia" class="site-nav__link">Experiência</a>
+        <a href="#passos" class="site-nav__link">Jornada</a>
+        <a href="#depoimentos" class="site-nav__link">Relatos</a>
+        <a href="#faq" class="site-nav__link">Dúvidas</a>
+      </nav>
+
+      <div class="site-header__actions">
+        <a
+          href="#agendar"
+          class="pill-btn pill-btn--header magnetic-btn"
+          data-cursor="AGENDAR"
+        >
+          <span>Agende Sua Avaliação</span>
+        </a>
+        <button
+          id="mobile-menu-toggle"
+          class="mobile-toggle"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Off-Canvas Drawer -->
+  <div id="mobile-drawer" class="mobile-drawer" aria-hidden="true">
+    <div class="mobile-drawer__inner">
+      <div class="mobile-drawer__header">
+        <img src="assets/logo.png" alt="Estética Marista" class="mobile-drawer__logo" />
+        <button id="mobile-menu-close" class="mobile-drawer__close" aria-label="Fechar menu">
+          ✕
+        </button>
+      </div>
+      <nav class="mobile-drawer__nav">
+        <a href="#essencia" class="mobile-drawer__link">Sobre Nós</a>
+        <a href="#tratamentos" class="mobile-drawer__link">Tratamentos</a>
+        <a href="#experiencia" class="mobile-drawer__link">Experiência</a>
+        <a href="#missao" class="mobile-drawer__link">Nossa Missão</a>
+        <a href="#passos" class="mobile-drawer__link">Três Passos</a>
+        <a href="#depoimentos" class="mobile-drawer__link">Relatos</a>
+        <a href="#faq" class="mobile-drawer__link">Perguntas Frequentes</a>
+      </nav>
+      <a href="#agendar" class="pill-btn pill-btn--solid mobile-drawer__cta">
+        <span>AGENDE SUA AVALIAÇÃO</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MAIN CONTENT
+  ========================================================== -->
+  <main id="smooth-wrapper">
+    <!-- -------------------------------------------------------
+         SEÇÃO 1: HERO FULL-BLEED COM O MESMO VÍDEO DA VENETIAN + 52 PERSIANAS 3D
+    -------------------------------------------------------- -->
+    <section id="hero" class="hero">
+      <div class="hero__video-wrap">
+        <video
+          id="hero-video"
+          class="hero__video"
+          autoplay
+          muted
+          playsinline
+          loop
+          preload="auto"
+          src="https://venetianspa.ca/wp-content/uploads/2026/04/aea5496227e84dd317a0bf9396ae97ed.mov"
+        ></video>
+        <div class="hero__scrim"></div>
+      </div>
+
+      <!-- 52-strip 3D Venetian Blind Transition Overlay (idêntica ao site de ref) -->
+      <div id="hero-blinds" class="home-hero-cover" aria-hidden="true"></div>
+
+      <div class="hero__content container">
+        <div class="hero__eyebrow hero-stagger">
+          <span class="hero__eyebrow-dot"></span>
+          <span>ESTÉTICA MARISTA • FACE E CORPO</span>
+        </div>
+
+        <h1 class="hero__title split-display" data-split="chars">
+          SUA BELEZA MERECE SER VALORIZADA EM CADA DETALHE.
+        </h1>
+
+        <div class="hero__copy-group hero-stagger">
+          <p class="hero__lead">
+            Realce sua beleza natural com tratamentos estéticos personalizados, tecnologia e um cuidado pensado exclusivamente para você.
+          </p>
+          <p class="hero__sublead">
+            Na Estética Marista, unimos ciência, tecnologia e sensibilidade para proporcionar experiências de beleza, autoestima e bem-estar.
+          </p>
+        </div>
+
+        <div class="hero__cta-row hero-stagger">
+          <a
+            href="#agendar"
+            class="pill-btn pill-btn--hero magnetic-btn"
+            data-cursor="AVALIAÇÃO"
+          >
+            <span>AGENDE SUA AVALIAÇÃO</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <a href="#essencia" class="hero__scroll-cue" aria-label="Rolar para explorar">
+        <span class="hero__scroll-text">EXPLORE</span>
+        <span class="hero__scroll-line"><span></span></span>
+      </a>
+    </section>
+
+    <!-- -------------------------------------------------------
+         SEÇÃO 2: ARCO DINÂMICO DE SOBREPOSIÇÃO (.radius-section)
+    -------------------------------------------------------- -->
+    <section id="essencia" class="radius-section">
+      <div class="radius-section__bg" aria-hidden="true"></div>
+
+      <div class="container radius-section__inner">
+        <p class="eyebrow-centered reveal-up">ESTÉTICA MARISTA — FACE E CORPO</p>
+
+        <div class="ornament-single reveal-scale" aria-hidden="true">
+          <span class="ornament-knot"></span>
+        </div>
+
+        <div class="intro-arch-frame general-reveal-img" data-cursor="CLÍNICA">
+          <img
+            src="assets/clinic-arch-interior.jpg"
+            alt="Ambiente sereno e acolhedor da Estética Marista"
+            class="intro-arch-frame__img"
+          />
+        </div>
+
+        <div class="intro-headline-wrap">
+          <span class="ornament-knot ornament-knot--flank" aria-hidden="true"></span>
+          <h2 class="display-h2 display-h2--centered split-display" data-split="chars">
+            VOCÊ NÃO PRECISA MUDAR QUEM É. SÓ PRECISA SE SENTIR AINDA MELHOR SENDO VOCÊ.
+          </h2>
+          <span class="ornament-knot ornament-knot--flank" aria-hidden="true"></span>
+        </div>
+
+        <div class="editorial-stack reveal-up">
+          <p>Sabemos que cada pessoa tem suas próprias expectativas, desejos e necessidades.</p>
+          <p>
+            Talvez você queira cuidar da pele, suavizar os sinais do tempo, valorizar seus contornos ou simplesmente reservar um momento para cuidar de si.
+          </p>
+          <p>
+            Independentemente do seu objetivo, acreditamos que a estética deve ser uma experiência de cuidado, confiança e valorização da sua individualidade.
+          </p>
+          <p class="editorial-stack__highlight">
+            Aqui, cada detalhe importa. E o seu bem-estar está sempre em primeiro lugar.
+          </p>
+        </div>
+
+        <div class="centered-cta reveal-up">
+          <a href="#tratamentos" class="pill-btn pill-btn--outline magnetic-btn" data-cursor="VER MAIS">
+            <span>Conhecer Tratamentos</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Kinetic Editorial Marquee -->
+      <div class="kinetic-marquee" aria-hidden="true">
+        <div class="kinetic-marquee__track">
+          <span>ESTÉTICA FACIAL</span>
+          <span class="kinetic-marquee__sep">✦</span>
+          <span>ESTÉTICA CORPORAL</span>
+          <span class="kinetic-marquee__sep">✦</span>
+          <span>REJUVENESCIMENTO</span>
+          <span class="kinetic-marquee__sep">✦</span>
+          <span>PROTOCOLOS PERSONALIZADOS</span>
+          <span class="kinetic-marquee__sep">✦</span>
+          <span>ESTÉTICA FACIAL</span>
+          <span class="kinetic-marquee__sep">✦</span>
+          <span>ESTÉTICA CORPORAL</span>
+          <span class="kinetic-marquee__sep">✦</span>
+          <span>REJUVENESCIMENTO</span>
+          <span class="kinetic-marquee__sep">✦</span>
+          <span>PROTOCOLOS PERSONALIZADOS</span>
+          <span class="kinetic-marquee__sep">✦</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------
+         SEÇÃO 3: CARROSSEL HORIZONTAL DE TRATAMENTOS (VENETIAN SWIPER)
+    -------------------------------------------------------- -->
+    <section id="tratamentos" class="treatments-section">
+      <div class="container treatments-section__header">
+        <div class="ornament-stripe reveal-up" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <h2 class="display-h2 split-display" data-split="chars">
+          TRATAMENTOS PENSADOS PARA VALORIZAR SUA BELEZA.
+        </h2>
+        <p class="editorial-subtitle reveal-up">
+          Conheça nossas soluções estéticas e descubra o cuidado ideal para seus objetivos.
+        </p>
+      </div>
+
+      <div class="treatments-carousel-wrap">
+        <div class="swiper home-carousel">
+          <div class="swiper-wrapper">
+            <!-- Card 1: Estética Facial -->
+            <article class="swiper-slide treatment-card" data-cursor="SAIBA MAIS">
+              <div class="treatment-card__media general-reveal-img">
+                <img
+                  src="assets/treatment-facial.jpg"
+                  alt="Tratamento de Estética Facial na Estética Marista"
+                />
+                <div class="treatment-card__gradient"></div>
+              </div>
+              <div class="treatment-card__body">
+                <span class="treatment-card__index">01</span>
+                <h3 class="treatment-card__title">ESTÉTICA FACIAL</h3>
+                <p class="treatment-card__desc">
+                  Cuidados personalizados para melhorar a qualidade da pele, valorizar seus traços e realçar sua beleza natural.
+                </p>
+                <button
+                  type="button"
+                  class="pill-btn pill-btn--card treatment-modal-trigger magnetic-btn"
+                  data-treatment="ESTÉTICA FACIAL"
+                  data-desc="Cuidados personalizados para melhorar a qualidade da pele, valorizar seus traços e realçar sua beleza natural."
+                  data-details="Protocolos faciais desenvolvidos após análise detalhada da sua pele, com foco em luminosidade, textura, hidratação profunda e harmonia natural dos seus traços."
+                  data-img="assets/treatment-facial.jpg"
+                >
+                  <span>SAIBA MAIS</span>
+                </button>
+              </div>
+            </article>
+
+            <!-- Card 2: Estética Corporal -->
+            <article class="swiper-slide treatment-card" data-cursor="SAIBA MAIS">
+              <div class="treatment-card__media general-reveal-img">
+                <img
+                  src="assets/treatment-corporal.jpg"
+                  alt="Tratamento de Estética Corporal na Estética Marista"
+                />
+                <div class="treatment-card__gradient"></div>
+              </div>
+              <div class="treatment-card__body">
+                <span class="treatment-card__index">02</span>
+                <h3 class="treatment-card__title">ESTÉTICA CORPORAL</h3>
+                <p class="treatment-card__desc">
+                  Protocolos desenvolvidos para cuidar do corpo, valorizar seus contornos e promover bem-estar.
+                </p>
+                <button
+                  type="button"
+                  class="pill-btn pill-btn--card treatment-modal-trigger magnetic-btn"
+                  data-treatment="ESTÉTICA CORPORAL"
+                  data-desc="Protocolos desenvolvidos para cuidar do corpo, valorizar seus contornos e promover bem-estar."
+                  data-details="Tratamentos corporais integrados que associam tecnologia de ponta e técnicas manuais especializadas para firmeza, definição de contornos e relaxamento."
+                  data-img="assets/treatment-corporal.jpg"
+                >
+                  <span>SAIBA MAIS</span>
+                </button>
+              </div>
+            </article>
+
+            <!-- Card 3: Rejuvenescimento -->
+            <article class="swiper-slide treatment-card" data-cursor="SAIBA MAIS">
+              <div class="treatment-card__media general-reveal-img">
+                <img
+                  src="assets/treatment-rejuvenescimento.jpg"
+                  alt="Tratamento de Rejuvenescimento na Estética Marista"
+                />
+                <div class="treatment-card__gradient"></div>
+              </div>
+              <div class="treatment-card__body">
+                <span class="treatment-card__index">03</span>
+                <h3 class="treatment-card__title">REJUVENESCIMENTO</h3>
+                <p class="treatment-card__desc">
+                  Tratamentos voltados ao cuidado com os sinais do envelhecimento, buscando uma aparência mais saudável e revitalizada.
+                </p>
+                <button
+                  type="button"
+                  class="pill-btn pill-btn--card treatment-modal-trigger magnetic-btn"
+                  data-treatment="REJUVENESCIMENTO"
+                  data-desc="Tratamentos voltados ao cuidado com os sinais do envelhecimento, buscando uma aparência mais saudável e revitalizada."
+                  data-details="Abordagem inteligente e respeitosa para estimular a vitalidade da pele, suavizar linhas de expressão e restaurar o viço sem perder a sua essência."
+                  data-img="assets/treatment-rejuvenescimento.jpg"
+                >
+                  <span>SAIBA MAIS</span>
+                </button>
+              </div>
+            </article>
+
+            <!-- Card 4: Protocolos Personalizados -->
+            <article class="swiper-slide treatment-card" data-cursor="SAIBA MAIS">
+              <div class="treatment-card__media general-reveal-img">
+                <img
+                  src="assets/treatment-protocolos.jpg"
+                  alt="Protocolos Personalizados na Estética Marista"
+                />
+                <div class="treatment-card__gradient"></div>
+              </div>
+              <div class="treatment-card__body">
+                <span class="treatment-card__index">04</span>
+                <h3 class="treatment-card__title">PROTOCOLOS PERSONALIZADOS</h3>
+                <p class="treatment-card__desc">
+                  Combinações de técnicas e tratamentos definidos de acordo com suas necessidades e objetivos individuais.
+                </p>
+                <button
+                  type="button"
+                  class="pill-btn pill-btn--card treatment-modal-trigger magnetic-btn"
+                  data-treatment="PROTOCOLOS PERSONALIZADOS"
+                  data-desc="Combinações de técnicas e tratamentos definidos de acordo com suas necessidades e objetivos individuais."
+                  data-details="Cada plano é desenhado sob medida na sua avaliação especializada, combinando procedimentos faciais e corporais no ritmo ideal para o seu momento."
+                  data-img="assets/treatment-protocolos.jpg"
+                >
+                  <span>SAIBA MAIS</span>
+                </button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="container treatments-section__controls">
+        <a href="#agendar" class="pill-btn pill-btn--outline magnetic-btn" data-cursor="AGENDAR">
+          <span>Agende Sua Avaliação</span>
+        </a>
+
+        <div class="carousel-arrows">
+          <button
+            type="button"
+            class="carousel-arrow carousel-arrow--prev magnetic-btn"
+            aria-label="Tratamento anterior"
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M11 4L6 9L11 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="carousel-arrow carousel-arrow--next magnetic-btn"
+            aria-label="Próximo tratamento"
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------
+         SEÇÃO 4: EXPERIÊNCIA DE CUIDADO EM CADA ETAPA (5 PILARES)
+    -------------------------------------------------------- -->
+    <section id="experiencia" class="experience-section">
+      <div class="container experience-grid">
+        <div class="experience-sticky">
+          <div class="ornament-stripe reveal-up" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+
+          <h2 class="display-h2 split-display" data-split="chars">
+            MAIS DO QUE PROCEDIMENTOS, UMA EXPERIÊNCIA DE CUIDADO EM CADA ETAPA.
+          </h2>
+
+          <div class="experience-sticky__copy reveal-up">
+            <p>
+              Acreditamos que um bom resultado começa muito antes do tratamento. Começa na escuta, na avaliação e na escolha de cada detalhe.
+            </p>
+            <p>
+              Por isso, nossa clínica oferece uma experiência que combina acolhimento, conhecimento técnico e atenção individualizada.
+            </p>
+          </div>
+
+          <div class="experience-arch-preview general-reveal-img">
+            <img
+              src="assets/treatment-protocolos.jpg"
+              alt="Detalhes dos protocolos e cuidados da Estética Marista"
+            />
+          </div>
+        </div>
+
+        <div class="pillars-list">
+          <article class="pillar-card tilt-card reveal-up">
+            <span class="pillar-card__num">01</span>
+            <div class="pillar-card__content">
+              <h3 class="pillar-card__title">ATENDIMENTO PERSONALIZADO</h3>
+              <p class="pillar-card__text">
+                Cada pessoa é única. Por isso, nossos cuidados são pensados considerando suas características, necessidades e expectativas.
+              </p>
+            </div>
+          </article>
+
+          <article class="pillar-card tilt-card reveal-up">
+            <span class="pillar-card__num">02</span>
+            <div class="pillar-card__content">
+              <h3 class="pillar-card__title">AVALIAÇÃO ESPECIALIZADA</h3>
+              <p class="pillar-card__text">
+                Entendemos seus objetivos e avaliamos as possibilidades antes de recomendar qualquer procedimento.
+              </p>
+            </div>
+          </article>
+
+          <article class="pillar-card tilt-card reveal-up">
+            <span class="pillar-card__num">03</span>
+            <div class="pillar-card__content">
+              <h3 class="pillar-card__title">TECNOLOGIA E INOVAÇÃO</h3>
+              <p class="pillar-card__text">
+                Utilizamos recursos e técnicas adequados para oferecer tratamentos alinhados às necessidades de cada paciente.
+              </p>
+            </div>
+          </article>
+
+          <article class="pillar-card tilt-card reveal-up">
+            <span class="pillar-card__num">04</span>
+            <div class="pillar-card__content">
+              <h3 class="pillar-card__title">SEGURANÇA E RESPONSABILIDADE</h3>
+              <p class="pillar-card__text">
+                Trabalhamos com atenção aos protocolos, às boas práticas profissionais e à indicação responsável de procedimentos.
+              </p>
+            </div>
+          </article>
+
+          <article class="pillar-card tilt-card reveal-up">
+            <span class="pillar-card__num">05</span>
+            <div class="pillar-card__content">
+              <h3 class="pillar-card__title">ACOMPANHAMENTO PRÓXIMO</h3>
+              <p class="pillar-card__text">
+                Estamos presentes em cada etapa da sua jornada, oferecendo orientação e atenção durante seu tratamento.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------
+         SEÇÃO 5: PALCO PINNED COM ARCOS FLUTUANTES (COMO VENETIANSPA.CA)
+    -------------------------------------------------------- -->
+    <section id="missao" class="home-scroll-container">
+      <div class="pinned-stage">
+        <div class="pinned-watermark" aria-hidden="true">EM.</div>
+
+        <div class="pinned-center-copy">
+          <div class="ornament-vertical reveal-scale" aria-hidden="true">
+            <span></span><span></span>
+          </div>
+
+          <h2 class="display-h2 display-h2--centered split-display" data-split="chars">
+            A BELEZA NÃO ESTÁ EM SER OUTRA PESSOA. ESTÁ EM SE RECONHECER E SE SENTIR BEM CONSIGO MESMA.
+          </h2>
+
+          <div class="editorial-stack editorial-stack--compact reveal-up">
+            <p>
+              Nossa missão é proporcionar experiências que valorizem sua individualidade, respeitem sua beleza e fortaleçam sua confiança.
+            </p>
+            <p>Acreditamos que cuidar de si é uma forma de reconhecer seu próprio valor.</p>
+            <p class="editorial-stack__highlight">E será um prazer fazer parte desse momento.</p>
+          </div>
+        </div>
+
+        <!-- 4 Arch-topped floating images gliding past the pinned headline -->
+        <div class="floating-arches" aria-hidden="true">
+          <figure class="move-up-img move-up-img--1">
+            <img src="assets/treatment-facial.jpg" alt="Estética Facial" />
+          </figure>
+          <figure class="move-up-img move-up-img--2">
+            <img src="assets/clinic-arch-interior.jpg" alt="Clínica Estética Marista" />
+          </figure>
+          <figure class="move-up-img move-up-img--3">
+            <img src="assets/treatment-rejuvenescimento.jpg" alt="Rejuvenescimento" />
+          </figure>
+          <figure class="move-up-img move-up-img--4">
+            <img src="assets/treatment-corporal.jpg" alt="Estética Corporal" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------
+         SEÇÃO 6: SEU CUIDADO COMEÇA COM TRÊS PASSOS
+    -------------------------------------------------------- -->
+    <section id="passos" class="steps-section">
+      <div class="container">
+        <div class="steps-section__header">
+          <div class="ornament-single reveal-scale" aria-hidden="true">
+            <span class="ornament-knot"></span>
+          </div>
+          <h2 class="display-h2 display-h2--centered split-display" data-split="chars">
+            SEU CUIDADO COMEÇA COM TRÊS PASSOS.
+          </h2>
+        </div>
+
+        <div class="steps-timeline">
+          <div class="steps-timeline__line" aria-hidden="true">
+            <div id="steps-line-fill" class="steps-timeline__fill"></div>
+          </div>
+
+          <article class="step-card tilt-card reveal-up">
+            <div class="step-card__badge">01</div>
+            <h3 class="step-card__title">01. AGENDE SUA AVALIAÇÃO</h3>
+            <p class="step-card__text">
+              Entre em contato com nossa equipe e escolha o melhor horário para conhecer nossa clínica.
+            </p>
+          </article>
+
+          <article class="step-card tilt-card reveal-up">
+            <div class="step-card__badge">02</div>
+            <h3 class="step-card__title">02. DESCUBRA SEU PROTOCOLO</h3>
+            <p class="step-card__text">
+              Nossa equipe avaliará suas necessidades e apresentará as possibilidades de tratamento mais adequadas aos seus objetivos.
+            </p>
+          </article>
+
+          <article class="step-card tilt-card reveal-up">
+            <div class="step-card__badge">03</div>
+            <h3 class="step-card__title">03. COMECE SUA JORNADA</h3>
+            <p class="step-card__text">
+              Inicie seu plano de cuidados com acompanhamento, atenção e dedicação em cada etapa.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------
+         SEÇÃO 7: DEPOIMENTOS FLUTUANTES EM ARCOS PINNED (VENETIANSPA.CA)
+    -------------------------------------------------------- -->
+    <section id="depoimentos" class="testimonial-container">
+      <div class="testimonial-stage">
+        <div class="testimonial-watermark" aria-hidden="true">EM.</div>
+
+        <div class="testimonial-center-copy">
+          <h2 class="display-h2 display-h2--centered split-display" data-split="chars">
+            EXPERIÊNCIAS QUE TRADUZEM O NOSSO CUIDADO.
+          </h2>
+
+          <div class="ornament-vertical reveal-scale" aria-hidden="true">
+            <span></span><span></span>
+          </div>
+
+          <div class="editorial-stack editorial-stack--compact reveal-up">
+            <p>
+              Mais do que oferecer tratamentos, queremos proporcionar experiências positivas e transformar a maneira como você se sente ao cuidar de si.
+            </p>
+            <p>Confira alguns relatos de quem já viveu essa experiência conosco.</p>
+          </div>
+        </div>
+
+        <div class="testimonial-arches">
+          <article class="testimonial-card testimonial-card--1">
+            <span class="testimonial-card__stars" aria-label="5 estrelas">★★★★★</span>
+            <h3 class="testimonial-card__name">Camila Ribeiro</h3>
+            <p class="testimonial-card__quote">
+              “Desde a avaliação me senti acolhida e ouvida. O protocolo facial realçou minha pele com muita naturalidade e cuidado em cada detalhe.”
+            </p>
+            <span class="testimonial-card__tag">Estética Facial</span>
+          </article>
+
+          <article class="testimonial-card testimonial-card--2">
+            <span class="testimonial-card__stars" aria-label="5 estrelas">★★★★★</span>
+            <h3 class="testimonial-card__name">Mariana Costa</h3>
+            <p class="testimonial-card__quote">
+              “A equipe da Estética Marista acompanha tudo de perto. Sinto minha pele mais saudável, iluminada e nunca perdi minha naturalidade.”
+            </p>
+            <span class="testimonial-card__tag">Rejuvenescimento</span>
+          </article>
+
+          <article class="testimonial-card testimonial-card--3">
+            <span class="testimonial-card__stars" aria-label="5 estrelas">★★★★★</span>
+            <h3 class="testimonial-card__name">Juliana Almeida</h3>
+            <p class="testimonial-card__quote">
+              “Ambiente sereno, atendimento extremamente profissional e protocolos pensados realmente para o meu momento. Recomendo de olhos fechados.”
+            </p>
+            <span class="testimonial-card__tag">Protocolos Personalizados</span>
+          </article>
+
+          <article class="testimonial-card testimonial-card--4">
+            <span class="testimonial-card__stars" aria-label="5 estrelas">★★★★★</span>
+            <h3 class="testimonial-card__name">Beatriz Nogueira</h3>
+            <p class="testimonial-card__quote">
+              “Cada sessão é uma pausa para me reconectar comigo mesma. Segurança, tecnologia e uma sensibilidade que fazem toda a diferença.”
+            </p>
+            <span class="testimonial-card__tag">Estética Corporal</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------
+         SEÇÃO 8: PERGUNTAS FREQUENTES (ACORDEÃO ANIMADO)
+    -------------------------------------------------------- -->
+    <section id="faq" class="faq-section">
+      <div class="container faq-layout">
+        <div class="faq-intro">
+          <div class="ornament-stripe reveal-up" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <h2 class="display-h2 split-display" data-split="chars">
+            PERGUNTAS FREQUENTES
+          </h2>
+          <p class="faq-intro__note reveal-up">
+            Transparência, acolhimento e clareza em cada etapa antes mesmo do seu primeiro atendimento.
+          </p>
+        </div>
+
+        <div class="faq-list">
+          <article class="faq-item is-open reveal-up">
+            <button type="button" class="faq-item__trigger" aria-expanded="true">
+              <span>Preciso fazer uma avaliação antes do procedimento?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel">
+              <p>
+                Sim. A avaliação é importante para entender suas necessidades, identificar possíveis contraindicações e indicar os tratamentos mais adequados para você.
+              </p>
+            </div>
+          </article>
+
+          <article class="faq-item reveal-up">
+            <button type="button" class="faq-item__trigger" aria-expanded="false">
+              <span>Como saber qual tratamento é ideal para mim?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel">
+              <p>
+                Cada pessoa possui características e objetivos diferentes. Por isso, a indicação é feita individualmente, após uma avaliação profissional.
+              </p>
+            </div>
+          </article>
+
+          <article class="faq-item reveal-up">
+            <button type="button" class="faq-item__trigger" aria-expanded="false">
+              <span>Os procedimentos são seguros?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel">
+              <p>
+                A segurança depende da indicação correta, da qualificação do profissional, dos produtos e equipamentos utilizados e do cumprimento dos protocolos adequados.
+              </p>
+            </div>
+          </article>
+
+          <article class="faq-item reveal-up">
+            <button type="button" class="faq-item__trigger" aria-expanded="false">
+              <span>Como faço para agendar?</span>
+              <span class="faq-item__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-item__panel">
+              <p>
+                É muito simples! Clique no botão do WhatsApp e nossa equipe ajudará você a encontrar o melhor horário para sua avaliação.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------
+         SEÇÃO 9: CTA FINAL FULL-BLEED + FORMULÁRIO DE PRÉ-AGENDAMENTO
+    -------------------------------------------------------- -->
+    <section id="agendar" class="final-cta">
+      <div class="final-cta__bg">
+        <img
+          src="assets/clinic-cta-backdrop.jpg"
+          alt="Atmosfera acolhedora da Estética Marista"
+          class="final-cta__img"
+        />
+        <div class="final-cta__overlay"></div>
+      </div>
+
+      <div class="container final-cta__grid">
+        <div class="final-cta__copy">
+          <h2 class="display-h2 display-h2--light split-display" data-split="chars">
+            O MOMENTO DE CUIDAR DE VOCÊ É AGORA.
+          </h2>
+
+          <p class="final-cta__p reveal-up">
+            Permita-se viver uma experiência de cuidado, beleza e valorização da sua individualidade.
+          </p>
+          <p class="final-cta__p reveal-up">
+            Descubra como nossos tratamentos podem fazer parte da sua jornada de autocuidado.
+          </p>
+          <p class="final-cta__strong reveal-up">
+            Sua beleza merece atenção. Você merece esse cuidado.
+          </p>
+
+          <div class="final-cta__actions reveal-up">
+            <a
+              id="whatsapp-direct-cta"
+              href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20avalia%C3%A7%C3%A3o%20na%20Est%C3%A9tica%20Marista."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="pill-btn pill-btn--white-glow magnetic-btn"
+              data-cursor="WHATSAPP"
+            >
+              <span>AGENDE SUA AVALIAÇÃO PELO WHATSAPP</span>
+            </a>
+            <span class="final-cta__welcome">Será um prazer receber você!</span>
+          </div>
+        </div>
+
+        <form id="evaluation-form" class="cta-form reveal-up" novalidate>
+          <h3 class="cta-form__title">Solicite seu horário</h3>
+          <div class="cta-form__fields">
+            <input
+              type="text"
+              name="nome"
+              placeholder="Seu Nome"
+              required
+              class="pill-input"
+            />
+            <input
+              type="tel"
+              name="whatsapp"
+              placeholder="Seu WhatsApp"
+              required
+              class="pill-input"
+            />
+            <select name="tratamento" class="pill-input pill-input--select">
+              <option value="Avaliação Geral">Selecione o interesse (opcional)</option>
+              <option value="Estética Facial">Estética Facial</option>
+              <option value="Estética Corporal">Estética Corporal</option>
+              <option value="Rejuvenescimento">Rejuvenescimento</option>
+              <option value="Protocolos Personalizados">Protocolos Personalizados</option>
+            </select>
+            <textarea
+              name="mensagem"
+              rows="3"
+              placeholder="Conte brevemente seu objetivo ou melhor horário"
+              class="pill-input pill-input--textarea"
+            ></textarea>
+          </div>
+          <button type="submit" class="pill-btn pill-btn--form magnetic-btn">
+            <span>Iniciar Atendimento no WhatsApp</span>
+          </button>
+          <p id="form-feedback" class="cta-form__feedback" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================
+       FOOTER ARREDONDADO COM IDENTIDADE DA MARCA
+  ========================================================== -->
+  <footer class="site-footer">
+    <div class="container site-footer__top">
+      <div class="site-footer__brand">
+        <img src="assets/logo.png" alt="Logo Estética Marista" class="site-footer__logo" />
+        <div>
+          <strong class="site-footer__name">Estética Marista</strong>
+          <p class="site-footer__tagline">Beleza, cuidado e autoestima em cada detalhe.</p>
+        </div>
+      </div>
+
+      <div class="site-footer__info">
+        <span class="site-footer__address">[ENDEREÇO DA CLÍNICA]</span>
+        <div class="site-footer__socials">
+          <a href="#agendar" class="site-footer__link">[WHATSAPP]</a>
+          <span aria-hidden="true">|</span>
+          <a href="#agendar" class="site-footer__link">[INSTAGRAM]</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container site-footer__bottom">
+      <hr class="site-footer__divider" />
+      <p class="site-footer__copy">
+        © 2026 Estética Marista. Todos os direitos reservados.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Modal "SAIBA MAIS" dos Tratamentos -->
+  <div id="treatment-modal" class="treatment-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="treatment-modal__backdrop"></div>
+    <div class="treatment-modal__dialog">
+      <button type="button" id="treatment-modal-close" class="treatment-modal__close" aria-label="Fechar">
+        ✕
+      </button>
+      <div class="treatment-modal__media">
+        <img id="modal-img" src="assets/treatment-facial.jpg" alt="Tratamento Estética Marista" />
+      </div>
+      <div class="treatment-modal__content">
+        <span class="treatment-modal__eyebrow">ESTÉTICA MARISTA • FACE E CORPO</span>
+        <h3 id="modal-title" class="treatment-modal__title"></h3>
+        <p id="modal-desc" class="treatment-modal__desc"></p>
+        <p id="modal-details" class="treatment-modal__details"></p>
+        <a id="modal-cta" href="#agendar" class="pill-btn pill-btn--solid">
+          <span>AGENDE SUA AVALIAÇÃO</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts: Lenis Smooth Scroll, GSAP + ScrollTrigger, Swiper, Three.js -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
+      }
+    }
+  </script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
