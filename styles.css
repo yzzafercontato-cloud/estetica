@@ -1,11 +1,11 @@
 /* ==========================================================================
-   ESTÉTICA MARISTA — DESIGN SYSTEM & MOTION STYLESHEET
+   YZZA FER — DESIGN SYSTEM & MOTION STYLESHEET
    Identidade visual inspirada no selo circular Espresso/Terracota + Halo Pérola,
    com arquitetura, arcos e movimentos coreografados inspirados em venetianspa.ca.
    ========================================================================== */
 
 :root {
-  /* Paleta da marca extraída do logo Estética Marista */
+  /* Paleta terrosa da marca YZZA FER */
   --espresso: #562112;
   --espresso-deep: #3b150a;
   --espresso-mid: #6e311f;
@@ -103,7 +103,7 @@ button {
   left: 0;
   width: 100%;
   height: 50%;
-  background: radial-gradient(circle at center, #245b98 0%, #102d52 100%);
+  background: radial-gradient(circle at center, #6e311f 0%, #3b150a 100%);
   z-index: 1;
   will-change: transform;
 }
@@ -144,13 +144,13 @@ button {
 
 .preloader__ring--outer {
   border-top-color: #f6efe8;
-  border-right-color: #8db8e8;
+  border-right-color: var(--champagne);
   animation: spinOrbit 2.4s linear infinite;
 }
 
 .preloader__ring--inner {
   inset: 11px;
-  border: 1px dashed rgba(141, 184, 232, 0.65);
+  border: 1px dashed rgba(200, 168, 130, 0.65);
   animation: spinOrbitReverse 4s linear infinite;
 }
 
@@ -159,7 +159,7 @@ button {
   height: 116px;
   border-radius: 50%;
   object-fit: contain;
-  box-shadow: 0 0 42px rgba(141, 184, 232, 0.22);
+  box-shadow: 0 0 42px rgba(200, 168, 130, 0.22);
   animation: pulseLogo 2.2s ease-in-out infinite;
 }
 
@@ -180,7 +180,7 @@ button {
 .preloader__sub {
   font-size: 0.72rem;
   letter-spacing: 0.34em;
-  color: #b9d6f5;
+  color: var(--champagne-soft);
 }
 
 .preloader__progress-wrap {
@@ -201,7 +201,7 @@ button {
 .preloader__progress-bar {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #8db8e8, #f6efe8);
+  background: linear-gradient(90deg, var(--champagne), #f6efe8);
   transition: width 0.12s linear;
 }
 
@@ -210,7 +210,7 @@ button {
   letter-spacing: 0.14em;
   min-width: 38px;
   text-align: right;
-  color: #d4e7fb;
+  color: var(--champagne-soft);
 }
 
 @keyframes spinOrbit {
@@ -408,7 +408,7 @@ button {
 .three-stage {
   position: fixed;
   inset: 0;
-  z-index: 7;
+  z-index: 5;
   pointer-events: none;
   overflow: hidden;
 }

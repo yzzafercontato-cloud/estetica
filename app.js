@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 /* ==========================================================================
-   ESTÉTICA MARISTA — CHOREOGRAPHED MOTION, 3D SCROLL & INTERACTIONS
+   YZZA FER — CHOREOGRAPHED MOTION, 3D SCROLL & INTERACTIONS
    ========================================================================== */
 
 gsap.registerPlugin(ScrollTrigger);
@@ -561,99 +561,93 @@ function initThreeAestheticScene() {
   warmPoint.position.set(2, 1.5, 4);
   scene.add(warmPoint);
 
-  // Grupo principal que muda de posição e rotação conforme o scroll
+  // Orquídea tridimensional que muda de posição e rotação conforme o scroll
   const sculptureGroup = new THREE.Group();
   scene.add(sculptureGroup);
 
-  // Materiais luxo: vidro champagne translúcido, ouro rosado, pérola e bronze espresso
-  const glassDropMat = new THREE.MeshPhysicalMaterial({
-    color: 0xf4e3cf,
-    metalness: 0.08,
-    roughness: 0.12,
-    transmission: 0.65,
-    thickness: 1.2,
-    clearcoat: 1.0,
-    clearcoatRoughness: 0.08,
-    iridescence: 0.85,
-    iridescenceIOR: 1.35,
-    transparent: true,
-    opacity: 0.92
-  });
-
-  const champagneGoldMat = new THREE.MeshStandardMaterial({
-    color: 0xd4b28c,
-    metalness: 0.88,
-    roughness: 0.22
-  });
-
-  const espressoBronzeMat = new THREE.MeshStandardMaterial({
-    color: 0x6b3220,
-    metalness: 0.62,
-    roughness: 0.28
-  });
-
-  const pearlMat = new THREE.MeshPhysicalMaterial({
-    color: 0xfff8f1,
-    metalness: 0.1,
-    roughness: 0.18,
-    clearcoat: 1.0,
-    iridescence: 0.6
-  });
-
-  // 1) Gota / Frasco escultural de sérum estético (LatheGeometry)
-  const dropPoints = [
-    new THREE.Vector2(0.0, -1.05),
-    new THREE.Vector2(0.45, -0.95),
-    new THREE.Vector2(0.78, -0.5),
-    new THREE.Vector2(0.82, 0.02),
-    new THREE.Vector2(0.55, 0.56),
-    new THREE.Vector2(0.24, 0.95),
-    new THREE.Vector2(0.18, 1.12),
-    new THREE.Vector2(0.0, 1.15)
+  const petalMaterials = [
+    new THREE.MeshPhysicalMaterial({ color: 0xe8d4c1, roughness: 0.42, clearcoat: 0.28, side: THREE.DoubleSide }),
+    new THREE.MeshPhysicalMaterial({ color: 0xd8bea8, roughness: 0.48, clearcoat: 0.2, side: THREE.DoubleSide }),
+    new THREE.MeshPhysicalMaterial({ color: 0xf0e2d2, roughness: 0.4, clearcoat: 0.3, side: THREE.DoubleSide })
   ];
-  const serumGeo = new THREE.LatheGeometry(dropPoints, 48);
-  const serumDrop = new THREE.Mesh(serumGeo, glassDropMat);
-  sculptureGroup.add(serumDrop);
+  const lipMaterial = new THREE.MeshPhysicalMaterial({ color: 0x9b5b43, roughness: 0.34, clearcoat: 0.42, side: THREE.DoubleSide });
+  const throatMaterial = new THREE.MeshStandardMaterial({ color: 0x6e311f, roughness: 0.3 });
+  const goldMaterial = new THREE.MeshStandardMaterial({ color: 0xc8a882, metalness: 0.35, roughness: 0.32 });
 
-  // Colar metálico dourado no topo da gota (efeito frasco de essência)
-  const collarGeo = new THREE.CylinderGeometry(0.24, 0.27, 0.22, 36);
-  const collar = new THREE.Mesh(collarGeo, champagneGoldMat);
-  collar.position.y = 0.98;
-  sculptureGroup.add(collar);
+  const createPetalGeometry = (length, width, arch = 0.16) => {
+    const lengthSegments = 24;
+    const widthSegments = 12;
+    const positions = [];
+    const indices = [];
 
-  // Pérola luminosa no interior da gota
-  const corePearl = new THREE.Mesh(new THREE.SphereGeometry(0.28, 32, 32), pearlMat);
-  corePearl.position.y = -0.18;
-  sculptureGroup.add(corePearl);
+    for (let row = 0; row <= lengthSegments; row++) {
+      const t = row / lengthSegments;
+      const petalWidth = width * Math.pow(Math.sin(Math.PI * t), 0.72) * (0.72 + t * 0.28);
+      for (let column = 0; column <= widthSegments; column++) {
+        const u = (column / widthSegments) * 2 - 1;
+        positions.push(u * petalWidth, t * length, arch * Math.sin(Math.PI * t) + u * u * 0.07);
+      }
+    }
 
-  // 2) Anéis halótipos esculturais (remetendo ao anel luminoso do logo da clínica)
-  const outerHaloGeo = new THREE.TorusGeometry(1.48, 0.028, 20, 90);
-  const outerHalo = new THREE.Mesh(outerHaloGeo, champagneGoldMat);
-  outerHalo.rotation.x = Math.PI * 0.36;
-  outerHalo.rotation.y = Math.PI * 0.14;
-  sculptureGroup.add(outerHalo);
+    for (let row = 0; row < lengthSegments; row++) {
+      for (let column = 0; column < widthSegments; column++) {
+        const a = row * (widthSegments + 1) + column;
+        const b = a + widthSegments + 1;
+        indices.push(a, b, a + 1, b, b + 1, a + 1);
+      }
+    }
 
-  const innerHaloGeo = new THREE.TorusGeometry(1.18, 0.018, 16, 80);
-  const innerHalo = new THREE.Mesh(innerHaloGeo, espressoBronzeMat);
-  innerHalo.rotation.x = -Math.PI * 0.3;
-  innerHalo.rotation.z = Math.PI * 0.22;
-  sculptureGroup.add(innerHalo);
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setIndex(indices);
+    geometry.computeVertexNormals();
+    return geometry;
+  };
 
-  // 3) Gotículas / pérolas orbitais (simbolizando hidratação e renovação celular)
-  const orbitSpheres = [];
-  const spherePositions = [
-    { pos: [1.55, 0.72, 0.35], r: 0.16, mat: pearlMat },
-    { pos: [-1.45, -0.55, 0.45], r: 0.12, mat: champagneGoldMat },
-    { pos: [1.15, -0.98, -0.4], r: 0.1, mat: espressoBronzeMat },
-    { pos: [-1.1, 1.05, -0.25], r: 0.14, mat: pearlMat }
+  const orchidStemMaterial = new THREE.MeshStandardMaterial({ color: 0x7a7550, roughness: 0.58 });
+  const stemCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(-0.5, -1.28, -0.18),
+    new THREE.Vector3(-0.18, -0.92, -0.14),
+    new THREE.Vector3(0.15, -0.48, -0.1),
+    new THREE.Vector3(0.12, -0.08, -0.05)
+  ]);
+  sculptureGroup.add(new THREE.Mesh(new THREE.TubeGeometry(stemCurve, 32, 0.035, 8, false), orchidStemMaterial));
+
+  const orchid = new THREE.Group();
+  orchid.position.set(0.12, 0.2, 0);
+  sculptureGroup.add(orchid);
+
+  const petalLayout = [
+    { angle: 0, length: 1.18, width: 0.46, material: 0 },
+    { angle: Math.PI * 0.4, length: 1.08, width: 0.42, material: 1 },
+    { angle: Math.PI * 0.8, length: 1.14, width: 0.43, material: 2 },
+    { angle: Math.PI * 1.2, length: 1.08, width: 0.42, material: 0 },
+    { angle: Math.PI * 1.6, length: 1.14, width: 0.43, material: 1 }
   ];
-  spherePositions.forEach((cfg) => {
-    const mesh = new THREE.Mesh(new THREE.SphereGeometry(cfg.r, 24, 24), cfg.mat);
-    mesh.position.set(...cfg.pos);
-    mesh.userData.basePos = new THREE.Vector3(...cfg.pos);
-    sculptureGroup.add(mesh);
-    orbitSpheres.push(mesh);
+  petalLayout.forEach(({ angle, length, width, material }) => {
+    const petal = new THREE.Mesh(createPetalGeometry(length, width), petalMaterials[material]);
+    petal.rotation.z = angle;
+    orchid.add(petal);
   });
+
+  const lip = new THREE.Mesh(createPetalGeometry(0.68, 0.38, 0.12), lipMaterial);
+  lip.rotation.z = Math.PI;
+  lip.position.set(0, -0.02, 0.18);
+  orchid.add(lip);
+
+  const column = new THREE.Mesh(new THREE.SphereGeometry(0.16, 24, 20), throatMaterial);
+  column.scale.set(0.8, 0.85, 0.72);
+  column.position.set(0, 0.04, 0.24);
+  orchid.add(column);
+
+  const orchidAccent = new THREE.Mesh(new THREE.SphereGeometry(0.055, 16, 12), goldMaterial);
+  orchidAccent.position.set(0, -0.12, 0.34);
+  orchid.add(orchidAccent);
+
+  const orchidBud = new THREE.Mesh(createPetalGeometry(0.36, 0.16, 0.06), petalMaterials[2]);
+  orchidBud.position.set(-0.36, -0.78, -0.12);
+  orchidBud.rotation.z = -0.52;
+  sculptureGroup.add(orchidBud);
 
   // 4) Partículas cristalinas sutis
   const particleCount = 120;
@@ -753,15 +747,6 @@ function initThreeAestheticScene() {
     sculptureGroup.rotation.x = scrollState.rotX + Math.sin(t * 0.7) * 0.08 + pointer.y * 0.2;
     sculptureGroup.rotation.z = scrollState.rotZ;
     sculptureGroup.scale.setScalar(scrollState.scale);
-
-    outerHalo.rotation.z = t * 0.25;
-    innerHalo.rotation.y = -t * 0.32;
-
-    orbitSpheres.forEach((s, idx) => {
-      const base = s.userData.basePos;
-      s.position.y = base.y + Math.sin(t * 1.3 + idx * 1.5) * 0.14;
-      s.position.x = base.x + Math.cos(t * 0.9 + idx) * 0.08;
-    });
 
     particles.rotation.y = t * 0.03;
     particles.rotation.x = Math.sin(t * 0.15) * 0.05;
@@ -995,7 +980,7 @@ function initInteractions() {
     const texto = `Olá! Me chamo ${nome} (${whatsapp}). Gostaria de agendar uma avaliação para ${tratamento}.${mensagem ? ` Observação: ${mensagem}` : ''}`;
     const url = `https://wa.me/5500000000000?text=${encodeURIComponent(texto)}`;
     if (feedback) {
-      feedback.textContent = 'Pronto! Abrindo conversa personalizada no WhatsApp da Estética Marista...';
+      feedback.textContent = 'Pronto! Abrindo conversa personalizada no WhatsApp da YZZA FER...';
     }
     window.open(url, '_blank', 'noopener,noreferrer');
   });
