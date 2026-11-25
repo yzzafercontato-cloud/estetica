@@ -103,7 +103,7 @@ button {
   left: 0;
   width: 100%;
   height: 50%;
-  background: radial-gradient(circle at center, #5b2415 0%, #3a1409 100%);
+  background: radial-gradient(circle at center, #245b98 0%, #102d52 100%);
   z-index: 1;
   will-change: transform;
 }
@@ -143,14 +143,14 @@ button {
 }
 
 .preloader__ring--outer {
-  border-top-color: var(--cream-bg);
-  border-right-color: var(--champagne);
+  border-top-color: #f6efe8;
+  border-right-color: #8db8e8;
   animation: spinOrbit 2.4s linear infinite;
 }
 
 .preloader__ring--inner {
   inset: 11px;
-  border: 1px dashed rgba(200, 168, 130, 0.55);
+  border: 1px dashed rgba(141, 184, 232, 0.65);
   animation: spinOrbitReverse 4s linear infinite;
 }
 
@@ -158,8 +158,8 @@ button {
   width: 116px;
   height: 116px;
   border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 42px rgba(255, 245, 235, 0.25);
+  object-fit: contain;
+  box-shadow: 0 0 42px rgba(141, 184, 232, 0.22);
   animation: pulseLogo 2.2s ease-in-out infinite;
 }
 
@@ -180,7 +180,7 @@ button {
 .preloader__sub {
   font-size: 0.72rem;
   letter-spacing: 0.34em;
-  color: var(--champagne);
+  color: #b9d6f5;
 }
 
 .preloader__progress-wrap {
@@ -201,7 +201,7 @@ button {
 .preloader__progress-bar {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, var(--champagne), #fff8f0);
+  background: linear-gradient(90deg, #8db8e8, #f6efe8);
   transition: width 0.12s linear;
 }
 
@@ -210,7 +210,7 @@ button {
   letter-spacing: 0.14em;
   min-width: 38px;
   text-align: right;
-  color: var(--champagne-soft);
+  color: #d4e7fb;
 }
 
 @keyframes spinOrbit {
